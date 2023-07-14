@@ -178,6 +178,7 @@ cloud.google.com/go/gkemulticloud v0.4.0 h1:8F1NhJj8ucNj7lK51UZMtAjSWTgP1zO18XF6
 cloud.google.com/go/gkemulticloud v0.5.0 h1:8I84Q4vl02rJRsFiinBxl7WCozfdLlUVBQuSrqr9Wtk=
 cloud.google.com/go/gkemulticloud v0.5.0/go.mod h1:W0JDkiyi3Tqh0TJr//y19wyb1yf8llHVto2Htf2Ja3Y=
 cloud.google.com/go/grafeas v0.2.0 h1:CYjC+xzdPvbV65gi6Dr4YowKcmLo045pm18L0DhdELM=
+cloud.google.com/go/grafeas v0.2.0/go.mod h1:KhxgtF2hb0P191HlY5besjYm6MqTSTj3LSI+M+ByZHc=
 cloud.google.com/go/gsuiteaddons v1.4.0 h1:TGT2oGmO5q3VH6SjcrlgPUWI0njhYv4kywLm6jag0to=
 cloud.google.com/go/gsuiteaddons v1.5.0 h1:1mvhXqJzV0Vg5Fa95QwckljODJJfDFXV4pn+iL50zzA=
 cloud.google.com/go/gsuiteaddons v1.5.0/go.mod h1:TFCClYLd64Eaa12sFVmUyG62tk4mdIsI7pAnSXRkcFo=
@@ -271,6 +272,7 @@ cloud.google.com/go/pubsublite v1.5.0 h1:iqrD8vp3giTb7hI1q4TQQGj77cj8zzgmMPsTZtL
 cloud.google.com/go/pubsublite v1.7.0 h1:cb9fsrtpINtETHiJ3ECeaVzrfIVhcGjhhJEjybHXHao=
 cloud.google.com/go/pubsublite v1.7.0/go.mod h1:8hVMwRXfDfvGm3fahVbtDbiLePT3gpoiJYJY+vxWxVM=
 cloud.google.com/go/recaptchaenterprise v1.3.1 h1:u6EznTGzIdsyOsvm+Xkw0aSuKFXQlyjGE9a4exk6iNQ=
+cloud.google.com/go/recaptchaenterprise v1.3.1/go.mod h1:OdD+q+y4XGeAlxRaMn1Y7/GveP6zmq76byL6tjPE7d4=
 cloud.google.com/go/recaptchaenterprise/v2 v2.5.0 h1:UqzFfb/WvhwXGDF1eQtdHLrmni+iByZXY4h3w9Kdyv8=
 cloud.google.com/go/recaptchaenterprise/v2 v2.7.0 h1:6iOCujSNJ0YS7oNymI64hXsjGq60T4FK1zdLugxbzvU=
 cloud.google.com/go/recaptchaenterprise/v2 v2.7.0/go.mod h1:19wVj/fs5RtYtynAPJdDTb69oW0vNHYDBTbB4NvMD9c=
@@ -357,6 +359,7 @@ cloud.google.com/go/videointelligence v1.9.0 h1:RPFgVVXbI2b5vnrciZjtsUgpNKVtHO/W
 cloud.google.com/go/videointelligence v1.10.0 h1:Uh5BdoET8XXqXX2uXIahGb+wTKbLkGH7s4GXR58RrG8=
 cloud.google.com/go/videointelligence v1.10.0/go.mod h1:LHZngX1liVtUhZvi2uNS0VQuOzNi2TkY1OakiuoUOjU=
 cloud.google.com/go/vision v1.2.0 h1:/CsSTkbmO9HC8iQpxbK8ATms3OQaX3YQUeTMGCxlaK4=
+cloud.google.com/go/vision v1.2.0/go.mod h1:SmNwgObm5DpFBme2xpyOyasvBc1aPdjvMk2bBk0tKD0=
 cloud.google.com/go/vision/v2 v2.5.0 h1:TQHxRqvLMi19azwm3qYuDbEzZWmiKJNTpGbkNsfRCik=
 cloud.google.com/go/vision/v2 v2.7.0 h1:8C8RXUJoflCI4yVdqhTy9tRyygSHmp60aP363z23HKg=
 cloud.google.com/go/vision/v2 v2.7.0/go.mod h1:H89VysHy21avemp6xcf9b9JvZHVehWbET0uT/bcuY/0=
