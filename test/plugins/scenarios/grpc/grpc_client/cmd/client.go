@@ -23,7 +23,7 @@ import (
 	"net/http"
 	"fmt"
 
-	pb "../../api"
+	pb "test/plugins/scenarios/grpc/api"
 
 	_ "github.com/apache/skywalking-go"
 	"google.golang.org/grpc"
