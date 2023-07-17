@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option go_package = ".;service";
+
+service SendMsg {
+  rpc SendMsg(stream Request) returns (stream Response) {}
+}
+
+message Request { string requestMsg = 1; }
+
+message Response { string responseMsg = 1; }

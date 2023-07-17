@@ -9,10 +9,10 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-type ServerInterceptor struct {
+type ServerStartInterceptor struct {
 }
 
-func (h *ServerInterceptor) BeforeInvoke(invocation operator.Invocation) error {
+func (h *ServerStartInterceptor) BeforeInvoke(invocation operator.Invocation) error {
 	// 获取参数
 	ctx := invocation.Args()[0].(context.Context)
 	stream := invocation.Args()[1].(*transport.Stream)
@@ -48,14 +48,11 @@ func (h *ServerInterceptor) BeforeInvoke(invocation operator.Invocation) error {
 	return nil
 }
 
-func (h *ServerInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
-	invocation.GetContext()
-	span := invocation.GetContext().(tracing.Span)
-
-	if err, ok := result[0].(error); ok && err != nil {
-		span.Error(err.Error())
+func (h *ServerStartInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
+	if invocation.GetContext() == nil {
+		return nil
 	}
 
-	span.End()
+	invocation.GetContext().(tracing.Span).End()
 	return nil
 }

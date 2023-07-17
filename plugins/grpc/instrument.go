@@ -40,7 +40,7 @@ func (i *Instrument) Name() string {
 }
 
 func (i *Instrument) BasePackage() string {
-	return "github.com/grpc/grpc-go"
+	return "google.golang.org/grpc"
 }
 
 func (i *Instrument) VersionChecker(version string) bool {
@@ -56,7 +56,7 @@ func (i *Instrument) Points() []*instrument.Point {
 				instrument.WithArgType(1, "string"),
 				instrument.WithResultCount(1),
 				instrument.WithResultType(0, "error")),
-			Interceptor: "ClientInterceptor",
+			Interceptor: "ClientUnaryInterceptor",
 		},
 		{
 			PackagePath: "server",
@@ -65,7 +65,7 @@ func (i *Instrument) Points() []*instrument.Point {
 				instrument.WithArgType(0, "transport.ServerTransport"),
 				instrument.WithArgType(1, "*transport.Stream"),
 				instrument.WithArgType(2, "*traceInfo")),
-			Interceptor: "ServerInterceptor",
+			Interceptor: "ServerStartInterceptor",
 		},
 		{
 			PackagePath: "server",
@@ -78,7 +78,7 @@ func (i *Instrument) Points() []*instrument.Point {
 				instrument.WithArgType(4, "*traceInfo"),
 				instrument.WithResultCount(1),
 				instrument.WithResultType(0, "error")),
-			Interceptor: "ServerInterceptor",
+			Interceptor: "ServerUnaryInterceptor",
 		},
 	}
 }

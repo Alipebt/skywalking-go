@@ -21,36 +21,29 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"fmt"
 
-	"dubbo.apache.org/dubbo-go/v3/config"
-	_ "dubbo.apache.org/dubbo-go/v3/imports"
-	"test/plugins/scenarios/dubbo/api"
+	pb "test/plugins/scenarios/grpc/api"
 
 	_ "github.com/apache/skywalking-go"
+	"google.golang.org/grpc"
 )
 
-var grpcGreeterImpl = new(api.GreeterClientImpl)
-
 func main() {
-	config.SetConsumerService(grpcGreeterImpl)
-	if err := config.Load(); err != nil {
-		panic(err)
+	conn, err := grpc.Dial("127.0.0.1:9999")
+	if err != nil {
+		log.Fatalf("connect error: %v", err)
 	}
+	defer conn.Close()
+	client := pb.NewSendMsgClient(conn)
+
 	http.HandleFunc("/health", func(writer http.ResponseWriter, request *http.Request) {
 		_, _ = writer.Write([]byte("ok"))
 	})
 
 	http.HandleFunc("/consumer", func(writer http.ResponseWriter, request *http.Request) {
-		req := &api.HelloRequest{
-			Name: "laurence",
-		}
-		resp, err := grpcGreeterImpl.SayHello(context.Background(), req)
-		if err != nil {
-			writer.WriteHeader(500)
-			_, _ = writer.Write([]byte(err.Error()))
-			log.Println(err)
-		}
-		_, _ = writer.Write([]byte(resp.String()))
+		resp, err := client.SendMsg(context.Background(), &pb.Request{RequestMsg: "massages"})
+		fmt.Printf(resp.GetResponseMsg())
 	})
 
 	_ = http.ListenAndServe(":8080", nil)

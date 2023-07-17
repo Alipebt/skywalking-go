@@ -10,10 +10,10 @@ import (
 	"google.golang.org/grpc/peer"
 )
 
-type ClientInterceptor struct {
+type ClientUnaryInterceptor struct {
 }
 
-func (h *ClientInterceptor) BeforeInvoke(invocation operator.Invocation) error {
+func (h *ClientUnaryInterceptor) BeforeInvoke(invocation operator.Invocation) error {
 	// 获取参数
 	ctx := invocation.Args()[0].(context.Context)
 	method := invocation.Args()[1].(string)
@@ -48,7 +48,7 @@ func (h *ClientInterceptor) BeforeInvoke(invocation operator.Invocation) error {
 	return nil
 }
 
-func (h *ClientInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
+func (h *ClientUnaryInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
 	invocation.GetContext()
 	span := invocation.GetContext().(tracing.Span)
 
