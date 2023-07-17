@@ -21,27 +21,32 @@ cd $home
 
 echo "Installing protoc"
 apt update && apt install -y protobuf-compiler
-echo "apt over"
 go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
-echo "proto-gen-go over"
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
-echo "protoc-gen-go-grpc over"
 export PATH="$PATH:$(go env GOPATH)/bin"
 
 echo "building API"
-protoc -I=${home}/api --go_out=${home}/api --go-triple_out=${home}/api ${home}/api/api.proto
+protoc -I=${home}/api --go_out=${home}/api --go-grpc_out=${home}/api ${home}/api/api.proto
 
 echo "building applications"
-go build ${GO_BUILD_OPTS} -o server ./grpc_server/cmd/server.go
-go build ${GO_BUILD_OPTS} -o client ./grpc_client/cmd/client.go
+go build ${GO_BUILD_OPTS} -o server ./grpc_server/server.go
+go build ${GO_BUILD_OPTS} -o client ./grpc_client/client.go
+
+echo "HOME: ${home}"
+echo "GO_PATH: ${GOPATH}"
+echo "GO_ROOT: ${GOROOT}"
+
+mkdir -p /usr/local/go/src/test/plugins/scenarios/grpc
+cp -r ${home}/api /usr/local/go/src/test/plugins/scenarios/grpc
+echo "mkdir & cp OK"
+ls -a /usr/local/go/src/test/plugins/scenarios/grpc
+
 
 echo "starting server"
-export DUBBO_GO_CONFIG_PATH=${home}/grpc_server/conf/grpc.yaml
 export SW_AGENT_NAME=grpc-server
 ./server &
 sleep 2
 
 echo "starting client"
 export SW_AGENT_NAME=grpc-client
-export DUBBO_GO_CONFIG_PATH=${home}/grpc_client/conf/grpc.yaml
 ./client
