@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"net"
 
-	"test/plugins/scenarios/grpc/api"
+	pb "test/plugins/scenarios/grpc/api"
 
 	_ "github.com/apache/skywalking-go"
 	"google.golang.org/grpc"
 )
 
 type server struct {
-	api.UnimplementedSendMsgServer
+	pb.UnimplementedSendMsgServer
 }
 
 func main() {
@@ -26,7 +26,7 @@ func main() {
 	grpcServer := grpc.NewServer()
 
 	// 注册服务
-	api.RegisterSendMsgServer(grpcServer, &server{})
+	pb.RegisterSendMsgServer(grpcServer, &server{})
 
 	// 启动
 	err = grpcServer.Serve(listen)

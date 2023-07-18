@@ -19,11 +19,11 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
-	"fmt"
 
-	"test/plugins/scenarios/grpc/api"
+	pb "test/plugins/scenarios/grpc/api"
 
 	_ "github.com/apache/skywalking-go"
 	"google.golang.org/grpc"
@@ -35,14 +35,14 @@ func main() {
 		log.Fatalf("connect error: %v", err)
 	}
 	defer conn.Close()
-	client := api.NewSendMsgClient(conn)
+	client := pb.NewSendMsgClient(conn)
 
 	http.HandleFunc("/health", func(writer http.ResponseWriter, request *http.Request) {
 		_, _ = writer.Write([]byte("ok"))
 	})
 
 	http.HandleFunc("/consumer", func(writer http.ResponseWriter, request *http.Request) {
-		resp, err := client.SendMsg(context.Background(), &api.Request{RequestMsg: "massages"})
+		resp, _ := client.SendMsg(context.Background(), &pb.Request{requestMsg: "massages"})
 		fmt.Printf(resp.GetResponseMsg())
 	})
 

@@ -32,15 +32,6 @@ echo "building applications"
 go build ${GO_BUILD_OPTS} -o server ./grpc_server/server.go
 go build ${GO_BUILD_OPTS} -o client ./grpc_client/client.go
 
-echo "HOME: ${home}"
-echo "GO_PATH: ${GOPATH}"
-echo "GO_ROOT: ${GOROOT}"
-
-mkdir -p /usr/local/go/src/test/plugins/scenarios/grpc
-cp -r ${home}/api /usr/local/go/src/test/plugins/scenarios/grpc
-echo "mkdir & cp OK"
-ls -a /usr/local/go/src/test/plugins/scenarios/grpc
-
 
 echo "starting server"
 export SW_AGENT_NAME=grpc-server

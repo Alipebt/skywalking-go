@@ -1,10 +1,11 @@
-module github.com/apache/skywalking-go/plugins/grpc
+module test/plugins/scenarios/grpc
 
-go 1.18
+go 1.20
 
 require (
 	github.com/apache/skywalking-go v0.1.0
-	google.golang.org/grpc v1.56.0
+	google.golang.org/grpc v1.56.2
+	google.golang.org/protobuf v1.30.0
 )
 
 require (
@@ -18,6 +19,5 @@ require (
 	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
 	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 // indirect
-	google.golang.org/protobuf v1.30.0 // indirect
 	skywalking.apache.org/repo/goapi v0.0.0-20230314034821-0c5a44bb767a // indirect
 )
