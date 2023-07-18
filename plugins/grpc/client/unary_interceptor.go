@@ -2,7 +2,6 @@ package grpc
 
 import (
 	"context"
-	"strings"
 
 	"github.com/apache/skywalking-go/plugins/core/operator"
 	"github.com/apache/skywalking-go/plugins/core/tracing"
@@ -30,7 +29,7 @@ func (h *ClientUnaryInterceptor) BeforeInvoke(invocation operator.Invocation) er
 	remotePeer, _ := getRemotePeer(ctx)
 
 	// 创建span
-	s, err := tracing.CreateExitSpan(formatOperationName(method), remotePeer, func(headerKey, headerValue string) error {
+	s, err := tracing.CreateExitSpan(method, remotePeer, func(headerKey, headerValue string) error {
 		// 将新的元数据附加到上下文中
 		ctx = context.WithValue(ctx, headerKey, headerValue)
 		return nil
@@ -58,21 +57,6 @@ func (h *ClientUnaryInterceptor) AfterInvoke(invocation operator.Invocation, res
 
 	span.End()
 	return nil
-}
-
-func formatServiceName(fullMethod string) string {
-	index := strings.LastIndex(fullMethod, "/")
-	return fullMethod[:index]
-}
-
-func formatMethodName(fullMethod string) string {
-	index := strings.LastIndex(fullMethod, "/")
-	methodName := fullMethod[index+1:]
-	return strings.ToLower(methodName[:1]) + methodName[1:]
-}
-
-func formatOperationName(fullMethod string) string {
-	return strings.Replace(formatServiceName(fullMethod), "/", ".", -1) + "." + formatMethodName(fullMethod)
 }
 
 func getRemotePeer(ctx context.Context) (string, error) {

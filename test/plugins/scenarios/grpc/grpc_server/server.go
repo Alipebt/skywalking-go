@@ -1,7 +1,9 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"log"
 	"net"
 
 	pb "test/plugins/scenarios/grpc/api"
@@ -14,24 +16,27 @@ type server struct {
 	pb.UnimplementedGreeterServer
 }
 
+func (s *server) SimpleRPC(ctx context.Context, in *pb.HelloRequest) (*pb.HelloResponse, error) {
+	log.Println("client call simpleRPC...")
+	log.Println(in)
+	return &pb.HelloResponse{Reply: "Hello " + in.Name}, nil
+}
+
 func main() {
-	// 监听端口
 	listen, err := net.Listen("tcp", ":9999")
 	if err != nil {
-		fmt.Printf("listen port error: %v\n", err)
+		log.Fatal(err)
 		return
 	}
 
-	// 新建grpc的服务
-	grpcServer := grpc.NewServer()
+	s := grpc.NewServer()
 
-	// 注册服务
-	pb.RegisterGreeterServer(grpcServer, &server{})
+	pb.RegisterGreeterServer(s, &server{})
+	log.Println("gRPC server starts running...")
 
-	// 启动
-	err = grpcServer.Serve(listen)
+	err = s.Serve(listen)
 	if err != nil {
-		fmt.Printf("start grpcServer error: %v\n", err)
+		log.Fatal(err)
 		return
 	}
 }

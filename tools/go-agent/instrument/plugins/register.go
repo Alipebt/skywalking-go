@@ -25,6 +25,7 @@ import (
 	"github.com/apache/skywalking-go/plugins/go-restfulv3"
 	gorm_entry "github.com/apache/skywalking-go/plugins/gorm/entry"
 	gorm_mysql "github.com/apache/skywalking-go/plugins/gorm/mysql"
+	"github.com/Alipebt/skywalking-go/plugins/grpc"
 	"github.com/apache/skywalking-go/plugins/http"
 	"github.com/apache/skywalking-go/plugins/kratosv2"
 	"github.com/apache/skywalking-go/plugins/microv4"

@@ -26,14 +26,16 @@ import (
 
 	_ "github.com/apache/skywalking-go"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
-	conn, err := grpc.Dial("127.0.0.1:9999")
+	conn, err := grpc.Dial("127.0.0.1:9999", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("connect error: %v", err)
 	}
 	defer conn.Close()
+
 	client := pb.NewGreeterClient(conn)
 
 	http.HandleFunc("/health", func(writer http.ResponseWriter, request *http.Request) {
@@ -41,15 +43,15 @@ func main() {
 	})
 
 	http.HandleFunc("/consumer", func(writer http.ResponseWriter, request *http.Request) {
-		req := &pb.HelloRequest{
-			Name: "laurence",
-		}
-		resp, err := client.SayHello(context.Background(), req)
+		resp, err := client.SimpleRPC(context.Background(), &pb.HelloRequest{Name: "simpleRPC"})
 		if err != nil {
 			writer.WriteHeader(500)
 			_, _ = writer.Write([]byte(err.Error()))
 			log.Println(err)
 		}
+
+		log.Println(resp.GetReply())
+
 		_, _ = writer.Write([]byte(resp.String()))
 	})
 
