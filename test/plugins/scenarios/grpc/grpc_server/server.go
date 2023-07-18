@@ -11,7 +11,7 @@ import (
 )
 
 type server struct {
-	pb.UnimplementedSendMsgServer
+	pb.UnimplementedGreeterServer
 }
 
 func main() {
@@ -26,7 +26,7 @@ func main() {
 	grpcServer := grpc.NewServer()
 
 	// 注册服务
-	pb.RegisterSendMsgServer(grpcServer, &server{})
+	pb.RegisterGreeterServer(grpcServer, &server{})
 
 	// 启动
 	err = grpcServer.Serve(listen)

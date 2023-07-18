@@ -19,7 +19,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -35,15 +34,23 @@ func main() {
 		log.Fatalf("connect error: %v", err)
 	}
 	defer conn.Close()
-	client := pb.NewSendMsgClient(conn)
+	client := pb.NewGreeterClient(conn)
 
 	http.HandleFunc("/health", func(writer http.ResponseWriter, request *http.Request) {
 		_, _ = writer.Write([]byte("ok"))
 	})
 
 	http.HandleFunc("/consumer", func(writer http.ResponseWriter, request *http.Request) {
-		resp, _ := client.SendMsg(context.Background(), &pb.Request{requestMsg: "massages"})
-		fmt.Printf(resp.GetResponseMsg())
+		req := &pb.HelloRequest{
+			Name: "laurence",
+		}
+		resp, err := client.SayHello(context.Background(), req)
+		if err != nil {
+			writer.WriteHeader(500)
+			_, _ = writer.Write([]byte(err.Error()))
+			log.Println(err)
+		}
+		_, _ = writer.Write([]byte(resp.String()))
 	})
 
 	_ = http.ListenAndServe(":8080", nil)
