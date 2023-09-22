@@ -82,6 +82,14 @@ func (c *SegmentContext) GetParentSegmentID() string {
 	return c.ParentSegmentID
 }
 
+func (c *SegmentContext) GetCorrelationContextValue(key string) string {
+	return c.CorrelationContext[key]
+}
+
+func (c *SegmentContext) SetCorrelationContextValue(key, value string) {
+	c.CorrelationContext[key] = value
+}
+
 type SegmentSpan interface {
 	TracingSpan
 	GetSegmentContext() SegmentContext

@@ -175,6 +175,44 @@ func (t *Tracer) CleanContext() {
 	SetGLS(nil)
 }
 
+func (t *Tracer) GetCorrelationContextValue(key string) string {
+	tracer := getTracer()
+	if tracer == nil {
+		return ""
+	}
+	span := tracer.ActiveSpan()
+	if span == nil {
+		return ""
+	}
+	reportedSpan, ok := span.(*RootSegmentSpan)
+	if !ok {
+		return ""
+	}
+	return reportedSpan.Context().GetCorrelationContextValue(key)
+}
+
+func (t *Tracer) SetCorrelationContextValue(key, value string) {
+	tracer := getTracer()
+	if tracer == nil {
+		return
+	}
+	span := tracer.ActiveSpan()
+	if span == nil {
+		return
+	}
+	reportedSpan, ok := span.(*RootSegmentSpan)
+	if !ok {
+		return
+	}
+	if len(value) > tracer.correlation.MaxValueSize {
+		return
+	}
+	if len(reportedSpan.GetSegmentContext().CorrelationContext) >= tracer.correlation.MaxKeyCount {
+		return
+	}
+	reportedSpan.Context().SetCorrelationContextValue(key, value)
+}
+
 type ContextSnapshot struct {
 	activeSpan TracingSpan
 	runtime    *RuntimeContext
@@ -292,4 +330,12 @@ func saveSpanToActiveIfNotError(ctx *TracingContext, span interface{}, err error
 	}
 	ctx.SaveActiveSpan(span.(TracingSpan))
 	SetGLS(ctx)
+}
+
+func getTracer() *Tracer {
+	gls := GetGlobalOperator()
+	if gls == nil {
+		return nil
+	}
+	return gls.(*Tracer)
 }
