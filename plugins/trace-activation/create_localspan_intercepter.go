@@ -26,12 +26,12 @@ type CreateLocalSpanInterceptor struct {
 }
 
 func (h *CreateLocalSpanInterceptor) BeforeInvoke(invocation operator.Invocation) error {
+	operationName := invocation.Args()[0].(string)
+	s, err := tracing.CreateLocalSpan(operationName)
+	invocation.DefineReturnValues(s, err)
 	return nil
 }
 
 func (h *CreateLocalSpanInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
-	operationName := invocation.Args()[0].(string)
-	s, err := tracing.CreateLocalSpan(operationName)
-	invocation.DefineReturnValues(s, err)
 	return nil
 }

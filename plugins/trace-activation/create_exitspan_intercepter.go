@@ -27,14 +27,14 @@ type CreateExitSpanInterceptor struct {
 }
 
 func (h *CreateExitSpanInterceptor) BeforeInvoke(invocation operator.Invocation) error {
-	return nil
-}
-
-func (h *CreateExitSpanInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
 	operationName := invocation.Args()[0].(string)
 	peer := invocation.Args()[1].(string)
 	var injector func(headerKey, headerValue string) error = invocation.Args()[2].(trace.InjectorRef)
 	s, err := tracing.CreateExitSpan(operationName, peer, injector)
 	invocation.DefineReturnValues(s, err)
+	return nil
+}
+
+func (h *CreateExitSpanInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
 	return nil
 }

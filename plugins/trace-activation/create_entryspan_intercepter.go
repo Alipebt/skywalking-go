@@ -26,13 +26,13 @@ type CreateEntrySpanInterceptor struct {
 }
 
 func (h *CreateEntrySpanInterceptor) BeforeInvoke(invocation operator.Invocation) error {
-	return nil
-}
-
-func (h *CreateEntrySpanInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
 	operationName := invocation.Args()[0].(string)
 	var extractor func(headerKey string) (string, error) = invocation.Args()[2].(tracing.Extractor)
 	s, err := tracing.CreateEntrySpan(operationName, extractor)
 	invocation.DefineReturnValues(s, err)
+	return nil
+}
+
+func (h *CreateEntrySpanInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
 	return nil
 }

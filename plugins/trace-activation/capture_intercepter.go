@@ -26,10 +26,10 @@ type CaptureContextInterceptor struct {
 }
 
 func (h *CaptureContextInterceptor) BeforeInvoke(invocation operator.Invocation) error {
+	invocation.DefineReturnValues(tracing.CaptureContext())
 	return nil
 }
 
 func (h *CaptureContextInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
-	invocation.DefineReturnValues(tracing.CaptureContext())
 	return nil
 }
