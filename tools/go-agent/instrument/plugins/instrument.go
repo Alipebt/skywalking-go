@@ -340,7 +340,7 @@ func (i *Instrument) processPluginConfig(fileContent []byte) error {
 	return nil
 }
 
-//nolint
+// nolint
 func (i *Instrument) copyOperatorsFS(context *rewrite.Context, baseDir, packageName string) ([]string, error) {
 	result := make([]string, 0)
 	var debugBaseDir string

@@ -19,6 +19,7 @@ use (
 	./plugins/mux
 	./plugins/grpc
 	./plugins/irisv12
+	./plugins/trace-activation
 
 	./test/benchmark-codebase/consumer
 	./test/benchmark-codebase/provider
