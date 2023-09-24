@@ -176,11 +176,7 @@ func (t *Tracer) CleanContext() {
 }
 
 func (t *Tracer) GetCorrelationContextValue(key string) string {
-	tracer := getTracer()
-	if tracer == nil {
-		return ""
-	}
-	span := tracer.ActiveSpan()
+	span := t.ActiveSpan()
 	if span == nil {
 		return ""
 	}
@@ -192,11 +188,7 @@ func (t *Tracer) GetCorrelationContextValue(key string) string {
 }
 
 func (t *Tracer) SetCorrelationContextValue(key, value string) {
-	tracer := getTracer()
-	if tracer == nil {
-		return
-	}
-	span := tracer.ActiveSpan()
+	span := t.ActiveSpan()
 	if span == nil {
 		return
 	}
@@ -204,10 +196,10 @@ func (t *Tracer) SetCorrelationContextValue(key, value string) {
 	if !ok {
 		return
 	}
-	if len(value) > tracer.correlation.MaxValueSize {
+	if len(value) > t.correlation.MaxValueSize {
 		return
 	}
-	if len(reportedSpan.GetSegmentContext().CorrelationContext) >= tracer.correlation.MaxKeyCount {
+	if len(reportedSpan.GetSegmentContext().CorrelationContext) >= t.correlation.MaxKeyCount {
 		return
 	}
 	reportedSpan.Context().SetCorrelationContextValue(key, value)
@@ -330,12 +322,4 @@ func saveSpanToActiveIfNotError(ctx *TracingContext, span interface{}, err error
 	}
 	ctx.SaveActiveSpan(span.(TracingSpan))
 	SetGLS(ctx)
-}
-
-func getTracer() *Tracer {
-	gls := GetGlobalOperator()
-	if gls == nil {
-		return nil
-	}
-	return gls.(*Tracer)
 }
