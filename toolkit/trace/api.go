@@ -75,3 +75,7 @@ func GetCorrelation(key string) string {
 // nolint
 func SetCorrelation(key string, value string) {
 }
+
+// nolint
+func SetCorrelationConfig(maxKeyCount int, maxValueSize int) {
+}

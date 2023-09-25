@@ -144,6 +144,12 @@ func (i *Instrument) Points() []*instrument.Point {
 			At:          instrument.NewStaticMethodEnhance("SetCorrelation"),
 			Interceptor: "SetCorrelationInterceptor",
 		},
+		{
+			PackagePath: "",
+			PackageName: "trace",
+			At:          instrument.NewStaticMethodEnhance("SetCorrelationConfig"),
+			Interceptor: "SetCorrelationConfigInterceptor",
+		},
 	}
 }
 
