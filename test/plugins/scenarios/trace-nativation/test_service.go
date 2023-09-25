@@ -37,3 +37,18 @@ func testGetSegmentID() {
 	trace.SetTag("segmentID", trace.GetSegmentID())
 	trace.StopSpan()
 }
+
+func testContext() {
+	trace.CreateLocalSpan("testCaptureContext")
+	captureSpanID := trace.GetSpanID()
+	ctx := trace.CaptureContext()
+	trace.StopSpan()
+
+	trace.ContinueContext(ctx)
+	continueSpanID := trace.GetSpanID()
+	trace.CreateLocalSpan("testContinueContext")
+	if captureSpanID == continueSpanID {
+		trace.SetTag("testContinueContext", "success")
+	}
+	trace.StopSpan()
+}
