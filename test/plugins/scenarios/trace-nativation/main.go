@@ -15,25 +15,29 @@
 // specific language governing permissions and limitations
 // under the License.
 
-package traceactivation
+package main
 
 import (
-	"github.com/apache/skywalking-go/plugins/core/operator"
-	"github.com/apache/skywalking-go/plugins/core/tracing"
-	"github.com/apache/skywalking-go/toolkit/trace"
+	_ "github.com/apache/skywalking-go"
+	_ "github.com/apache/skywalking-go/toolkit/trace"
+	"net/http"
 )
 
-type CreateEntrySpanInterceptor struct {
+func providerHandler(w http.ResponseWriter, r *http.Request) {
+	_, _ = w.Write([]byte("success"))
 }
 
-func (h *CreateEntrySpanInterceptor) BeforeInvoke(invocation operator.Invocation) error {
-	operationName := invocation.Args()[0].(string)
-	var extractor func(headerKey string) (string, error) = invocation.Args()[1].(trace.ExtractorRef)
-	s, err := tracing.CreateEntrySpan(operationName, extractor)
-	invocation.DefineReturnValues(s, err)
-	return nil
+func consumerHandler(w http.ResponseWriter, r *http.Request) {
+
 }
 
-func (h *CreateEntrySpanInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
-	return nil
+func main() {
+	http.HandleFunc("/provider", providerHandler)
+	http.HandleFunc("/consumer", consumerHandler)
+
+	http.HandleFunc("/health", func(writer http.ResponseWriter, request *http.Request) {
+		writer.WriteHeader(http.StatusOK)
+	})
+
+	_ = http.ListenAndServe(":8080", nil)
 }
