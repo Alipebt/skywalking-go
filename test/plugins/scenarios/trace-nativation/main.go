@@ -19,7 +19,6 @@ package main
 
 import (
 	_ "github.com/apache/skywalking-go"
-	_ "github.com/apache/skywalking-go/toolkit/trace"
 	"net/http"
 )
 
