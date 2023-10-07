@@ -28,7 +28,14 @@ func providerHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func consumerHandler(w http.ResponseWriter, r *http.Request) {
-
+	testTag()
+	testLog()
+	testGetSegmentID()
+	testGetSpanID()
+	testGetTraceID()
+	testSetOperationName()
+	testContext()
+	testContextCarrierAndCorrelation()
 }
 
 func main() {
