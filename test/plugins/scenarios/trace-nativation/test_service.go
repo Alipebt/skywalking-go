@@ -1,6 +1,9 @@
 package main
 
-import "github.com/apache/skywalking-go/toolkit/trace"
+import (
+	"github.com/apache/skywalking-go/toolkit/trace"
+	"net/http"
+)
 
 func testTag() {
 	trace.CreateLocalSpan("testSetTag")
@@ -50,5 +53,23 @@ func testContext() {
 	if captureSpanID == continueSpanID {
 		trace.SetTag("testContinueContext", "success")
 	}
+	trace.StopSpan()
+}
+
+func testContextCarrierAndCorrelation() {
+	request, _ := http.NewRequest("GET", "http://localhost/", http.NoBody)
+	trace.CreateExitSpan("ExitSpan", request.Host, func(headerKey, headerValue string) error {
+		request.Header.Add(headerKey, headerValue)
+		return nil
+	})
+	trace.SetCorrelation("testCorrelation", "success")
+
+	go func() {
+		trace.CreateEntrySpan("EntrySpan", func(headerKey string) (string, error) {
+			return request.Header.Get(headerKey), nil
+		})
+		trace.SetTag("testCorrelation", trace.GetCorrelation("testCorrelation"))
+		trace.StopSpan()
+	}()
 	trace.StopSpan()
 }

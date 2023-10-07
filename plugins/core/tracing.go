@@ -180,11 +180,13 @@ func (t *Tracer) GetCorrelationContextValue(key string) string {
 	if span == nil {
 		return ""
 	}
-	reportedSpan, ok := span.(*RootSegmentSpan)
-	if !ok {
+	if reportedSegmentSpan, ok := span.(*SegmentSpanImpl); ok {
+		return reportedSegmentSpan.Context().GetCorrelationContextValue(key)
+	} else if reportedRootSpan, ok := span.(*RootSegmentSpan); ok {
+		return reportedRootSpan.Context().GetCorrelationContextValue(key)
+	} else {
 		return ""
 	}
-	return reportedSpan.Context().GetCorrelationContextValue(key)
 }
 
 func (t *Tracer) SetCorrelationContextValue(key, value string) {
@@ -192,17 +194,25 @@ func (t *Tracer) SetCorrelationContextValue(key, value string) {
 	if span == nil {
 		return
 	}
-	reportedSpan, ok := span.(*RootSegmentSpan)
-	if !ok {
+	if reportedSegmentSpan, ok := span.(*SegmentSpanImpl); ok {
+		if len(value) > t.correlation.MaxValueSize {
+			return
+		}
+		if len(reportedSegmentSpan.GetSegmentContext().CorrelationContext) >= t.correlation.MaxKeyCount {
+			return
+		}
+		reportedSegmentSpan.Context().SetCorrelationContextValue(key, value)
+	} else if reportedRootSpan, ok := span.(*RootSegmentSpan); ok {
+		if len(value) > t.correlation.MaxValueSize {
+			return
+		}
+		if len(reportedRootSpan.GetSegmentContext().CorrelationContext) >= t.correlation.MaxKeyCount {
+			return
+		}
+		reportedRootSpan.Context().SetCorrelationContextValue(key, value)
+	} else {
 		return
 	}
-	if len(value) > t.correlation.MaxValueSize {
-		return
-	}
-	if len(reportedSpan.GetSegmentContext().CorrelationContext) >= t.correlation.MaxKeyCount {
-		return
-	}
-	reportedSpan.Context().SetCorrelationContextValue(key, value)
 }
 
 func (t *Tracer) SetCorrelationConfig(maxKeyCount, maxValueSize int) {
