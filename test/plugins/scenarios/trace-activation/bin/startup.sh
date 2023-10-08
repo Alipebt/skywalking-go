@@ -15,6 +15,6 @@
 # limitations under the License.
 
 home="$(cd "$(dirname $0)"; pwd)"
-go build ${GO_BUILD_OPTS} -o trace-nativation
+go build ${GO_BUILD_OPTS} -o trace-activation
 
 ./trace-nativation
