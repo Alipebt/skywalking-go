@@ -100,13 +100,13 @@ func (i *Instrument) CouldHandle(opts *api.CompileOptions) bool {
 			logrus.Infof("plugin is exclude: %s", ins.Name())
 			continue
 		}
-		if ins.Name() == "trace-activation" {
-			fmt.Printf("########## [opts.Package]:%v\n", opts.Package)
-			fmt.Printf("########## [ins.BasePackage()]:%v\n", ins.BasePackage())
-		}
 		// must have the same base package prefix
 		if !strings.HasPrefix(opts.Package, ins.BasePackage()) {
 			continue
+		}
+		if ins.Name() == "trace-activation" {
+			fmt.Printf("########## [opts.Package]:%v\n", opts.Package)
+			fmt.Printf("########## [ins.BasePackage()]:%v\n", ins.BasePackage())
 		}
 		// check the version of the framework could handler
 		version, err := i.tryToFindThePluginVersion(opts, ins)
