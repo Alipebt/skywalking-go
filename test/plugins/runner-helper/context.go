@@ -59,9 +59,8 @@ func BuildContext() (*Context, error) {
 		ScenarioName: *scenarioName,
 		CaseName:     *caseName,
 		GoAgentPath:  filepath.Clean(*goAgentPath),
-		//DebugMode:    *debugMode == "on",
-		DebugMode: true,
-		Config:    config,
+		DebugMode:    *debugMode == "on",
+		Config:       config,
 	}, nil
 }
 
