@@ -22,6 +22,8 @@ import (
 	"flag"
 	"os"
 	"path/filepath"
+
+	"gopkg.in/yaml.v3"
 )
 
 var workSpaceDir = flag.String("workspace", "", "testcase workspace directory")

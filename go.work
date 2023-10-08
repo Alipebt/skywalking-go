@@ -44,7 +44,7 @@ use (
 	./test/plugins/scenarios/mux
 	./test/plugins/scenarios/grpc
     ./test/plugins/scenarios/irisv12
-	./test/plugins/scenarios/trace-nativation
+	./test/plugins/scenarios/trace-activation
 
 	./test/plugins/scenarios/plugin_exclusion
 	./test/plugins/scenarios/runtime_metrics
