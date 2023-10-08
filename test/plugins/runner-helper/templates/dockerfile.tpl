@@ -31,9 +31,8 @@ RUN echo "replace github.com/apache/skywalking-go => ../../../../../" >> test/pl
 WORKDIR /skywalking-go/test/plugins/workspace/{{.Context.ScenarioName}}/{{.Context.CaseName}}/
 {{ if ne .Context.Config.Toolkit ""}}
 RUN echo "replace github.com/apache/skywalking-go/toolkit/{{.Context.Config.Toolkit}} => ../../../../../toolkit/{{.Context.Config.Toolkit}}" >> ./go.mod
-{{ else }}
-RUN go mod tidy
 {{ end }}
+RUN go mod tidy
 
 ENV GO_BUILD_OPTS=" -toolexec \"/skywalking-go{{.ToolExecPath}}\" -a -work "
 
