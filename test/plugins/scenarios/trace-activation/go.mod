@@ -1,3 +1,3 @@
-module test/plugins/scenarios/trace-nativation
+module test/plugins/scenarios/trace-activation
 
 go 1.18

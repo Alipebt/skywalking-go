@@ -88,7 +88,7 @@ jobs:
 #          - mux
 #          - grpc
 #          - irisv12
-          - trace-nativation
+          - trace-activation
     steps:
       - uses: actions/checkout@v2
         with:
