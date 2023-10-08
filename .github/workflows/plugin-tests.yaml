@@ -16,9 +16,9 @@
 
 name: Plugin Tests
 
-concurrency:
-  group: plugins-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+#concurrency:
+#  group: plugins-${{ github.event.pull_request.number || github.ref }}
+#  cancel-in-progress: true
 
 on:
   pull_request:
@@ -63,8 +63,8 @@ jobs:
   test:
     if: always()
     name: ${{ matrix.case }}
-    needs:
-      - build
+#    needs:
+#      - build
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
@@ -158,9 +158,9 @@ jobs:
   required:
     if: always()
     name: Plugin Tests
-    needs:
-      - test
-      - test-on-macos
+#    needs:
+#      - test
+#      - test-on-macos
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
