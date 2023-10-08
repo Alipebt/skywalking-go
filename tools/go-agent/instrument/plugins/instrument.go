@@ -558,8 +558,10 @@ func (i *Instrument) tryToFindThePluginVersion(opts *api.CompileOptions, ins ins
 		// example: github.com/!shopify/sarama
 		// see: https://go.dev/ref/mod
 		escapedBasePkg, _ := module.EscapePath(basePkg)
-		fmt.Printf("########## [BasePkg]:%v\n", escapedBasePkg)
-		fmt.Printf("########## [arg]:%v\n", arg)
+		if escapedBasePkg == "github.com/apache/skywalking-go/toolkit/trace" {
+			fmt.Printf("########## [escapedBasePkg]:%v\n", escapedBasePkg)
+			fmt.Printf("########## [arg]:%v\n", arg)
+		}
 		// arg example: github.com/!shopify/sarama@1.34.1/acl.go
 		_, afterPkg, found := strings.Cut(arg, escapedBasePkg)
 		if !found {
