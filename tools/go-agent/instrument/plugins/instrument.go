@@ -100,6 +100,10 @@ func (i *Instrument) CouldHandle(opts *api.CompileOptions) bool {
 			logrus.Infof("plugin is exclude: %s", ins.Name())
 			continue
 		}
+		if ins.Name() == "trace-activation" {
+			fmt.Printf("########## [opts.Package]:%v\n", opts.Package)
+			fmt.Printf("########## [ins.BasePackage()]:%v\n", ins.BasePackage())
+		}
 		// must have the same base package prefix
 		if !strings.HasPrefix(opts.Package, ins.BasePackage()) {
 			continue
@@ -558,10 +562,7 @@ func (i *Instrument) tryToFindThePluginVersion(opts *api.CompileOptions, ins ins
 		// example: github.com/!shopify/sarama
 		// see: https://go.dev/ref/mod
 		escapedBasePkg, _ := module.EscapePath(basePkg)
-		if escapedBasePkg == "github.com/apache/skywalking-go/toolkit/trace" {
-			fmt.Printf("########## [escapedBasePkg]:%v\n", escapedBasePkg)
-			fmt.Printf("########## [arg]:%v\n", arg)
-		}
+
 		// arg example: github.com/!shopify/sarama@1.34.1/acl.go
 		_, afterPkg, found := strings.Cut(arg, escapedBasePkg)
 		if !found {
