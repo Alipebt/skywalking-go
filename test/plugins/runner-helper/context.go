@@ -22,8 +22,6 @@ import (
 	"flag"
 	"os"
 	"path/filepath"
-
-	"gopkg.in/yaml.v3"
 )
 
 var workSpaceDir = flag.String("workspace", "", "testcase workspace directory")
@@ -83,6 +81,7 @@ type Config struct {
 	ExportPort     int                                 `yaml:"export-port"`
 	SupportVersion []SupportVersion                    `yaml:"support-version"`
 	Dependencies   map[string]*DockerDependencyService `yaml:"dependencies"`
+	Toolkit        string                              `yaml:"toolkit"`
 }
 
 type DockerDependencyService struct {

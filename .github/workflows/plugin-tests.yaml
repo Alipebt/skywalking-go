@@ -71,7 +71,7 @@ jobs:
     strategy:
       matrix:
         case:
-#          - gin
+          - gin
 #          - http
 #          - dubbo
 #          - go-redisv9
