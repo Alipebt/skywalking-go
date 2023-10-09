@@ -566,6 +566,9 @@ func (i *Instrument) tryToFindThePluginVersion(opts *api.CompileOptions, ins ins
 		// arg example: github.com/!shopify/sarama@1.34.1/acl.go
 		_, afterPkg, found := strings.Cut(arg, escapedBasePkg)
 		if !found {
+			if ins.Name() == "trace-activation" {
+				return "", nil
+			}
 			return "", fmt.Errorf("could not found the go version of the package %s, go file path: %s", basePkg, arg)
 		}
 
