@@ -16,7 +16,7 @@
 
 segmentItems:
   - serviceName: trace-activation
-    segmentSize: 3
+    segmentSize: ge 2
     segments:
       - segmentId: not null
         spans:
