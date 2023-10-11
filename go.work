@@ -26,6 +26,8 @@ use (
 
 	./test/plugins/runner-helper
 
+	./toolkit/trace
+
 	// define the plugin test scenarios
 	./test/plugins/scenarios/dubbo
 	./test/plugins/scenarios/gin
@@ -49,5 +51,4 @@ use (
 
 	./tools/go-agent
 
-	./toolkit/trace
 )
