@@ -104,10 +104,7 @@ func (i *Instrument) CouldHandle(opts *api.CompileOptions) bool {
 		if !strings.HasPrefix(opts.Package, ins.BasePackage()) {
 			continue
 		}
-		if ins.Name() == "trace-activation" {
-			fmt.Printf("########## [opts.Package]:%v\n", opts.Package)
-			fmt.Printf("########## [ins.BasePackage()]:%v\n", ins.BasePackage())
-		}
+
 		// check the version of the framework could handler
 		version, err := i.tryToFindThePluginVersion(opts, ins)
 		if err != nil {
@@ -565,9 +562,6 @@ func (i *Instrument) tryToFindThePluginVersion(opts *api.CompileOptions, ins ins
 		// arg example: github.com/!shopify/sarama@1.34.1/acl.go
 		_, afterPkg, found := strings.Cut(arg, escapedBasePkg)
 		if !found {
-			if ins.Name() == "trace-activation" {
-				return "", nil
-			}
 			return "", fmt.Errorf("could not found the go version of the package %s, go file path: %s", basePkg, arg)
 		}
 
