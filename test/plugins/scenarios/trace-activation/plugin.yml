@@ -17,7 +17,6 @@
 entry-service: http://${HTTP_HOST}:${HTTP_PORT}/consumer
 health-checker: http://${HTTP_HOST}:${HTTP_PORT}/health
 start-script: ./bin/startup.sh
-framework: github.com/apache/skywalking-go/toolkit/trace
 export-port: 8080
 support-version:
   - go: 1.18
