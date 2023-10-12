@@ -31,6 +31,7 @@ func consumerHandler(w http.ResponseWriter, r *http.Request) {
 	testSetOperationName()
 	testContext()
 	testContextCarrierAndCorrelation()
+	_, _ = w.Write([]byte("success"))
 }
 
 func main() {
