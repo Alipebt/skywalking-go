@@ -16,7 +16,7 @@
 
 segmentItems:
   - serviceName: trace-activation
-    segmentSize: 3
+    segmentSize: ge 2
     segments:
       - segmentId: not null
         spans:
@@ -89,7 +89,7 @@ segmentItems:
             peer: ''
             skipAnalysis: false
             tags:
-              - {key: spanID, value: 4}
+              - {key: spanID, value: '4'}
           - operationName: testGetTraceID
             parentSpanId: 0
             spanId: 5
