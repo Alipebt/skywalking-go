@@ -20,6 +20,7 @@ package main
 import (
 	"github.com/apache/skywalking-go/toolkit/trace"
 	"net/http"
+	"strconv"
 )
 
 func testTag() {
@@ -48,7 +49,7 @@ func testGetTraceID() {
 
 func testGetSpanID() {
 	trace.CreateLocalSpan("testGetSpanID")
-	trace.SetTag("spanID", string(trace.GetSpanID()))
+	trace.SetTag("spanID", strconv.FormatInt(int64(trace.GetSpanID()), 10))
 	trace.StopSpan()
 }
 
