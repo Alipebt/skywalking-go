@@ -104,6 +104,7 @@ func (i *Instrument) CouldHandle(opts *api.CompileOptions) bool {
 		if !strings.HasPrefix(opts.Package, ins.BasePackage()) {
 			continue
 		}
+
 		// check the version of the framework could handler
 		version, err := i.tryToFindThePluginVersion(opts, ins)
 		if err != nil {
