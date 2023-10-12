@@ -19,40 +19,21 @@ package main
 
 import (
 	_ "github.com/apache/skywalking-go"
-	"io"
 	"net/http"
 )
 
-func providerHandler(w http.ResponseWriter, r *http.Request) {
-	_, _ = w.Write([]byte("success"))
-}
-
 func consumerHandler(w http.ResponseWriter, r *http.Request) {
-	//testTag()
-	//testLog()
-	//testGetSegmentID()
-	//testGetSpanID()
-	//testGetTraceID()
-	//testSetOperationName()
-	//testContext()
-	//testContextCarrierAndCorrelation()
-	//_, _ = w.Write([]byte("success"))
-	resp, err := http.Get("http://localhost:8080/provider")
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-	_, _ = w.Write(body)
+	testTag()
+	testLog()
+	testGetSegmentID()
+	testGetSpanID()
+	testGetTraceID()
+	testSetOperationName()
+	testContext()
+	testContextCarrierAndCorrelation()
 }
 
 func main() {
-	http.HandleFunc("/provider", providerHandler)
 	http.HandleFunc("/consumer", consumerHandler)
 
 	http.HandleFunc("/health", func(writer http.ResponseWriter, request *http.Request) {
