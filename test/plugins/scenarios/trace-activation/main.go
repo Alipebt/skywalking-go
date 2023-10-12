@@ -22,6 +22,10 @@ import (
 	"net/http"
 )
 
+func providerHandler(w http.ResponseWriter, r *http.Request) {
+	_, _ = w.Write([]byte("success"))
+}
+
 func consumerHandler(w http.ResponseWriter, r *http.Request) {
 	testTag()
 	testLog()
@@ -31,10 +35,10 @@ func consumerHandler(w http.ResponseWriter, r *http.Request) {
 	testSetOperationName()
 	testContext()
 	testContextCarrierAndCorrelation()
-	_, _ = w.Write([]byte("success"))
 }
 
 func main() {
+	http.HandleFunc("/provider", providerHandler)
 	http.HandleFunc("/consumer", consumerHandler)
 
 	http.HandleFunc("/health", func(writer http.ResponseWriter, request *http.Request) {
