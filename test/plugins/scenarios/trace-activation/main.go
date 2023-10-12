@@ -15,22 +15,30 @@
 // specific language governing permissions and limitations
 // under the License.
 
-package operator
+package main
 
-type TracingOperator interface {
-	CreateEntrySpan(operationName string, extractor interface{}, opts ...interface{}) (s interface{}, err error)
-	CreateLocalSpan(operationName string, opts ...interface{}) (s interface{}, err error)
-	CreateExitSpan(operationName, peer string, injector interface{}, opts ...interface{}) (s interface{}, err error)
-	ActiveSpan() interface{} // to Span
+import (
+	_ "github.com/apache/skywalking-go"
+	"net/http"
+)
 
-	GetRuntimeContextValue(key string) interface{}
-	SetRuntimeContextValue(key string, value interface{})
+func consumerHandler(w http.ResponseWriter, r *http.Request) {
+	testTag()
+	testLog()
+	testGetSegmentID()
+	testGetSpanID()
+	testGetTraceID()
+	testSetOperationName()
+	testContext()
+	testContextCarrierAndCorrelation()
+}
 
-	CaptureContext() interface{}
-	ContinueContext(interface{})
-	CleanContext()
+func main() {
+	http.HandleFunc("/consumer", consumerHandler)
 
-	GetCorrelationContextValue(key string) string
-	SetCorrelationContextValue(key, val string)
-	SetCorrelationConfig(maxKeyCount, maxValueSize int)
+	http.HandleFunc("/health", func(writer http.ResponseWriter, request *http.Request) {
+		writer.WriteHeader(http.StatusOK)
+	})
+
+	_ = http.ListenAndServe(":8080", nil)
 }

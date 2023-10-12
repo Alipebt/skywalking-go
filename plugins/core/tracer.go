@@ -42,10 +42,10 @@ type Tracer struct {
 	ServiceEntity *reporter.Entity
 	Reporter      reporter.Reporter
 	// 0 not init 1 init
-	initFlag int32
-	Sampler  Sampler
-	Log      *LogWrapper
-	// correlation *CorrelationConfig	// temporarily disable, because haven't been implemented yet
+	initFlag    int32
+	Sampler     Sampler
+	Log         *LogWrapper
+	correlation *CorrelationConfig
 	cdsWatchers []reporter.AgentConfigChangeWatcher
 	// for plugin tools
 	tools *TracerTools
@@ -65,6 +65,10 @@ func (t *Tracer) Init(entity *reporter.Entity, rep reporter.Reporter, samp Sampl
 	t.Reporter.Boot(entity, t.cdsWatchers)
 	t.initFlag = 1
 	t.initMetricsCollect(meterCollectSecond)
+	t.correlation = &CorrelationConfig{
+		MaxKeyCount:  3,
+		MaxValueSize: 128,
+	}
 	// notify the tracer been init success
 	if len(GetInitNotify()) > 0 {
 		for _, fun := range GetInitNotify() {
