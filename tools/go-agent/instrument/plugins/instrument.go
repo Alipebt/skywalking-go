@@ -107,8 +107,7 @@ func (i *Instrument) CouldHandle(opts *api.CompileOptions) bool {
 		// check the version of the framework could handler
 		version, err := i.tryToFindThePluginVersion(opts, ins)
 		if err != nil {
-			logrus.Warnf("ignore the plugin %s, because: %s", ins.Name(), err)
-			continue
+			logrus.Warnf("the plugin %s %s", ins.Name(), err)
 		}
 
 		if ins.VersionChecker(version) {
@@ -340,7 +339,7 @@ func (i *Instrument) processPluginConfig(fileContent []byte) error {
 	return nil
 }
 
-//nolint
+// nolint
 func (i *Instrument) copyOperatorsFS(context *rewrite.Context, baseDir, packageName string) ([]string, error) {
 	result := make([]string, 0)
 	var debugBaseDir string
