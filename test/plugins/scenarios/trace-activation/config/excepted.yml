@@ -138,7 +138,7 @@ segmentItems:
             skipAnalysis: false
             tags:
               - {key: http.method, value: GET}
-              - {key: url, value: service:8080/consumer}
+              - {key: url, value: 'service:8080/consumer'}
               - {key: status_code, value: '200'}
       - segmentId: not null
         spans:
@@ -156,7 +156,7 @@ segmentItems:
             tags:
               - {key: testCorrelation, value: success}
             refs:
-              - {parentEndpoint: GET:/consumer, networkAddress: localhost, refType: CrossProcess,
+              - {parentEndpoint: 'GET:/consumer', networkAddress: localhost, refType: CrossProcess,
                  parentSpanId: 9, parentTraceSegmentId: not null,
                  parentServiceInstance: not null, parentService: trace-activation,
                  traceId: not null}
