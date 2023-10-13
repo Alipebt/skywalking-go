@@ -50,6 +50,19 @@ segmentItems:
             skipAnalysis: false
             tags:
               - {key: SetTag, value: success}
+          - operationName: testGetSegmentID
+            parentSpanId: 0
+            spanId: 3
+            spanLayer: Unknown
+            startTime: nq 0
+            endTime: nq 0
+            componentId: 0
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: segmentID, value: not null}
           - operationName: testSetLog
             parentSpanId: 0
             spanId: 2
@@ -64,19 +77,6 @@ segmentItems:
             logs:
               - logEvent:
                   - {key: SetLog, value: success}
-          - operationName: testGetSegmentID
-            parentSpanId: 0
-            spanId: 3
-            spanLayer: Unknown
-            startTime: nq 0
-            endTime: nq 0
-            componentId: 0
-            isError: false
-            spanType: Local
-            peer: ''
-            skipAnalysis: false
-            tags:
-              - {key: segmentID, value: not null}
           - operationName: testGetSpanID
             parentSpanId: 0
             spanId: 4
@@ -103,12 +103,6 @@ segmentItems:
             skipAnalysis: false
             tags:
               - {key: traceID, value: not null}
-          - {operationName: testSetOperationName_success, parentSpanId: 0, spanId: 6, spanLayer: Unknown,
-             startTime: nq 0, endTime: nq 0, componentId: 0, isError: false,
-             spanType: Local, peer: '', skipAnalysis: false}
-          - {operationName: testCaptureContext, parentSpanId: 0, spanId: 7, spanLayer: Unknown,
-             startTime: nq 0, endTime: nq 0, componentId: 0, isError: false,
-             spanType: Local, peer: '', skipAnalysis: false}
           - operationName: testContinueContext
             parentSpanId: 7
             spanId: 8
@@ -122,6 +116,30 @@ segmentItems:
             skipAnalysis: false
             tags:
               - {key: testContinueContext, value: success}
+          - {operationName: testSetOperationName_success, parentSpanId: 0, spanId: 6, spanLayer: Unknown,
+             startTime: nq 0, endTime: nq 0, componentId: 0, isError: false,
+             spanType: Local, peer: '', skipAnalysis: false}
+          - {operationName: testCaptureContext, parentSpanId: 0, spanId: 7, spanLayer: Unknown,
+             startTime: nq 0, endTime: nq 0, componentId: 0, isError: false,
+             spanType: Local, peer: '', skipAnalysis: false}
+          - operationName: EntrySpan
+            parentSpanId: 9
+            spanId: 10
+            spanLayer: Unknown
+            startTime: nq 0
+            endTime: nq 0
+            componentId: 0
+            isError: false
+            spanType: Entry
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: testCorrelation, value: success}
+            refs:
+              - {parentEndpoint: 'GET:/consumer', networkAddress: localhost, refType: CrossProcess,
+                 parentSpanId: 9, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: trace-activation,
+                 traceId: not null}
           - {operationName: ExitSpan, parentSpanId: 7, spanId: 9, spanLayer: Unknown, startTime: nq 0,
              endTime: nq 0, componentId: 0, isError: false, spanType: Exit, peer: localhost,
              skipAnalysis: false}
@@ -140,25 +158,5 @@ segmentItems:
               - {key: http.method, value: GET}
               - {key: url, value: 'service:8080/consumer'}
               - {key: status_code, value: '200'}
-      - segmentId: not null
-        spans:
-          - operationName: EntrySpan
-            parentSpanId: -1
-            spanId: 0
-            spanLayer: Unknown
-            startTime: nq 0
-            endTime: nq 0
-            componentId: 0
-            isError: false
-            spanType: Entry
-            peer: ''
-            skipAnalysis: false
-            tags:
-              - {key: testCorrelation, value: success}
-            refs:
-              - {parentEndpoint: 'GET:/consumer', networkAddress: localhost, refType: CrossProcess,
-                 parentSpanId: 9, parentTraceSegmentId: not null,
-                 parentServiceInstance: not null, parentService: trace-activation,
-                 traceId: not null}
 meterItems: []
 logItems: []
