@@ -82,12 +82,11 @@ func testContextCarrierAndCorrelation() {
 	})
 	trace.SetCorrelation("testCorrelation", "success")
 
-	go func() {
-		trace.CreateEntrySpan("EntrySpan", func(headerKey string) (string, error) {
-			return request.Header.Get(headerKey), nil
-		})
-		trace.SetTag("testCorrelation", trace.GetCorrelation("testCorrelation"))
-		trace.StopSpan()
-	}()
+	trace.CreateEntrySpan("EntrySpan", func(headerKey string) (string, error) {
+		return request.Header.Get(headerKey), nil
+	})
+	trace.SetTag("testCorrelation", trace.GetCorrelation("testCorrelation"))
+	trace.StopSpan()
+
 	trace.StopSpan()
 }
