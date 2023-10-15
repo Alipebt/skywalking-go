@@ -31,8 +31,8 @@ func testTag() {
 }
 
 func testLog() {
-	trace.CreateLocalSpan("testSetLog")
-	trace.SetLog("SetLog", "success")
+	trace.CreateLocalSpan("testAddLog")
+	trace.AddLog("AddLog", "success")
 	trace.StopSpan()
 }
 

@@ -22,10 +22,10 @@ import (
 	"github.com/apache/skywalking-go/plugins/core/tracing"
 )
 
-type SetLogInterceptor struct {
+type AddLogInterceptor struct {
 }
 
-func (h *SetLogInterceptor) BeforeInvoke(invocation operator.Invocation) error {
+func (h *AddLogInterceptor) BeforeInvoke(invocation operator.Invocation) error {
 	span := tracing.ActiveSpan()
 	if span != nil {
 		logs := invocation.Args()[0].([]string)
@@ -34,6 +34,6 @@ func (h *SetLogInterceptor) BeforeInvoke(invocation operator.Invocation) error {
 	return nil
 }
 
-func (h *SetLogInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
+func (h *AddLogInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
 	return nil
 }
