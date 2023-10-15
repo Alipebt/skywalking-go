@@ -49,5 +49,5 @@ use (
 
 	./tools/go-agent
 
-	./toolkit/trace
+	./toolkit
 )

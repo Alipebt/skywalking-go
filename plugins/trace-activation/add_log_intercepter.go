@@ -22,16 +22,18 @@ import (
 	"github.com/apache/skywalking-go/plugins/core/tracing"
 )
 
-type SetCorrelationConfigInterceptor struct {
+type AddLogInterceptor struct {
 }
 
-func (h *SetCorrelationConfigInterceptor) BeforeInvoke(invocation operator.Invocation) error {
-	maxKeyCount := invocation.Args()[0].(int)
-	maxValueSize := invocation.Args()[1].(int)
-	tracing.SetCorrelationConfig(maxKeyCount, maxValueSize)
+func (h *AddLogInterceptor) BeforeInvoke(invocation operator.Invocation) error {
+	span := tracing.ActiveSpan()
+	if span != nil {
+		logs := invocation.Args()[0].([]string)
+		span.Log(logs...)
+	}
 	return nil
 }
 
-func (h *SetCorrelationConfigInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
+func (h *AddLogInterceptor) AfterInvoke(invocation operator.Invocation, result ...interface{}) error {
 	return nil
 }

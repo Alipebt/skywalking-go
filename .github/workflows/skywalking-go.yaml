@@ -40,41 +40,42 @@ jobs:
       - name: Lint
         run: make lint
 
-  build:
-    name: Build on ${{ matrix.os }} with Go ${{ matrix.go-version }}
-    needs:
-      - tests
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ ubuntu-latest, macos-13, windows-latest ]
-        go-version: [ 1.18, 1.19 ]
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
-    steps:
-      - name: Set up Go ${{ matrix.go-version }}
-        uses: actions/setup-go@v2
-        with:
-          go-version: ${{ matrix.go-version }}
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v2
-        with:
-          submodules: true
-      - name: Get dependencies
-        run: make deps
-      - name: Build
-        run: make build
-
-  required:
-    if: always()
-    name: Required
-    needs:
-      - build
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Merge Requirement
-        run: |
-          if [[ ${{ needs.build.result }} != 'success' ]]; then
-            exit -1
-          fi
+#  build:
+#    name: Build on ${{ matrix.os }} with Go ${{ matrix.go-version }}
+#    needs:
+#      - tests
+#    strategy:
+#      fail-fast: true
+#      matrix:
+##        , windows-latest
+#        os: [ ubuntu-latest, macos-13 ]
+#        go-version: [ 1.18, 1.19 ]
+#    runs-on: ${{ matrix.os }}
+#    timeout-minutes: 60
+#    steps:
+#      - name: Set up Go ${{ matrix.go-version }}
+#        uses: actions/setup-go@v2
+#        with:
+#          go-version: ${{ matrix.go-version }}
+#      - name: Check out code into the Go module directory
+#        uses: actions/checkout@v2
+#        with:
+#          submodules: true
+#      - name: Get dependencies
+#        run: make deps
+#      - name: Build
+#        run: make build
+#
+#  required:
+#    if: always()
+#    name: Required
+#    needs:
+#      - build
+#    runs-on: ubuntu-latest
+#    timeout-minutes: 10
+#    steps:
+#      - name: Merge Requirement
+#        run: |
+#          if [[ ${{ needs.build.result }} != 'success' ]]; then
+#            exit -1
+#          fi

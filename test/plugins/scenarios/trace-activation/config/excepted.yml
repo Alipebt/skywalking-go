@@ -76,7 +76,7 @@ segmentItems:
             skipAnalysis: false
             tags:
               - {key: traceID, value: nq 0}
-          - operationName: testSetLog
+          - operationName: testAddLog
             parentSpanId: 0
             spanId: 2
             spanLayer: Unknown
@@ -89,7 +89,7 @@ segmentItems:
             skipAnalysis: false
             logs:
               - logEvent:
-                  - {key: SetLog, value: success}
+                  - {key: AddLog, value: success}
           - {operationName: testSetOperationName_success, parentSpanId: 0, spanId: 6, spanLayer: Unknown,
              startTime: nq 0, endTime: nq 0, componentId: 0, isError: false,
              spanType: Local, peer: '', skipAnalysis: false}

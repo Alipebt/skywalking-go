@@ -95,8 +95,8 @@ func (i *Instrument) Points() []*instrument.Point {
 		},
 		{
 			PackagePath: "", PackageName: "trace",
-			At:          instrument.NewStaticMethodEnhance("SetLog"),
-			Interceptor: "SetLogInterceptor",
+			At:          instrument.NewStaticMethodEnhance("AddLog"),
+			Interceptor: "AddLogInterceptor",
 		},
 		{
 			PackagePath: "", PackageName: "trace",
@@ -127,11 +127,6 @@ func (i *Instrument) Points() []*instrument.Point {
 			PackagePath: "", PackageName: "trace",
 			At:          instrument.NewStaticMethodEnhance("SetCorrelation"),
 			Interceptor: "SetCorrelationInterceptor",
-		},
-		{
-			PackagePath: "", PackageName: "trace",
-			At:          instrument.NewStaticMethodEnhance("SetCorrelationConfig"),
-			Interceptor: "SetCorrelationConfigInterceptor",
 		},
 	}
 }

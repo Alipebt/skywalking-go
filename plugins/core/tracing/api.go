@@ -173,14 +173,6 @@ func SetCorrelationContextValue(key, val string) {
 	}
 }
 
-// SetCorrelationConfig sets the value of the CorrelationConfig
-func SetCorrelationConfig(maxKeyCount, maxValueSize int) {
-	op := operator.GetOperator()
-	if op != nil {
-		op.Tracing().(operator.TracingOperator).SetCorrelationConfig(maxKeyCount, maxValueSize)
-	}
-}
-
 type extractorWrapperImpl struct {
 	extractor Extractor
 }
