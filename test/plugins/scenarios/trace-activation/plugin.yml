@@ -21,12 +21,6 @@ framework: go
 export-port: 8080
 support-version:
   - go: 1.18
-    framework:
-      - v0.2.0
   - go: 1.19
-    framework:
-      - v0.2.0
   - go: 1.20
-    framework:
-      - v0.2.0
-toolkit: trace
+toolkit: true

@@ -75,19 +75,25 @@ func testContext() {
 	trace.StopSpan()
 }
 
-func testContextCarrierAndCorrelation() {
+func testContextCarrier() {
 	request, _ := http.NewRequest("GET", "http://localhost/", http.NoBody)
 	trace.CreateExitSpan("ExitSpan", request.Host, func(headerKey, headerValue string) error {
 		request.Header.Add(headerKey, headerValue)
 		return nil
 	})
-	trace.SetCorrelation("testCorrelation", "success")
 
 	trace.CreateEntrySpan("EntrySpan", func(headerKey string) (string, error) {
 		return request.Header.Get(headerKey), nil
 	})
-	trace.SetTag("testCorrelation", trace.GetCorrelation("testCorrelation"))
 	trace.StopSpan()
 
 	trace.StopSpan()
+}
+
+func testCorrelation() {
+	trace.SetCorrelation("testCorrelation", "success")
+	_, err := http.Get("http://localhost:8080/provider")
+	if err != nil {
+		return
+	}
 }

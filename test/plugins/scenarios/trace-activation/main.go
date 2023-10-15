@@ -21,7 +21,14 @@ import (
 	"net/http"
 
 	_ "github.com/apache/skywalking-go"
+	"github.com/apache/skywalking-go/toolkit/trace"
 )
+
+func providerHandler(w http.ResponseWriter, r *http.Request) {
+	trace.CreateLocalSpan("testSetCorrelation")
+	trace.SetTag("testCorrelation", trace.GetCorrelation("testCorrelation"))
+	trace.StopSpan()
+}
 
 func consumerHandler(w http.ResponseWriter, r *http.Request) {
 	testTag()
@@ -30,11 +37,14 @@ func consumerHandler(w http.ResponseWriter, r *http.Request) {
 	testGetSpanID()
 	testGetTraceID()
 	testSetOperationName()
+	testCorrelation()
 	testContext()
-	testContextCarrierAndCorrelation()
+	testContextCarrier()
 }
 
 func main() {
+	http.HandleFunc("/provider", providerHandler)
+
 	http.HandleFunc("/consumer", consumerHandler)
 
 	http.HandleFunc("/health", func(writer http.ResponseWriter, request *http.Request) {
