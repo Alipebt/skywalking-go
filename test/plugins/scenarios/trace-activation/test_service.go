@@ -18,9 +18,10 @@
 package main
 
 import (
-	"github.com/apache/skywalking-go/toolkit/trace"
 	"net/http"
 	"strconv"
+
+	"github.com/apache/skywalking-go/toolkit/trace"
 )
 
 func testTag() {

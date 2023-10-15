@@ -216,15 +216,6 @@ func (t *Tracer) SetCorrelationContextValue(key, value string) {
 	}
 }
 
-func (t *Tracer) SetCorrelationConfig(maxKeyCount, maxValueSize int) {
-	if maxKeyCount >= 0 {
-		t.correlation.MaxKeyCount = maxKeyCount
-	}
-	if maxValueSize >= 0 {
-		t.correlation.MaxValueSize = maxValueSize
-	}
-}
-
 type ContextSnapshot struct {
 	activeSpan TracingSpan
 	runtime    *RuntimeContext

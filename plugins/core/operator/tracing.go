@@ -32,5 +32,4 @@ type TracingOperator interface {
 
 	GetCorrelationContextValue(key string) string
 	SetCorrelationContextValue(key, val string)
-	SetCorrelationConfig(maxKeyCount, maxValueSize int)
 }

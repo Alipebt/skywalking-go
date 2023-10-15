@@ -59,7 +59,7 @@ func GetSpanID() int32 {
 func SetTag(key string, value string) {
 }
 
-func SetLog(...string) {
+func AddLog(...string) {
 }
 
 func PrepareAsync() {
@@ -74,8 +74,4 @@ func GetCorrelation(key string) string {
 
 // nolint
 func SetCorrelation(key string, value string) {
-}
-
-// nolint
-func SetCorrelationConfig(maxKeyCount int, maxValueSize int) {
 }

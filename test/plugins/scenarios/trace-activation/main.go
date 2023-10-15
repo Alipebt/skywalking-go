@@ -18,8 +18,9 @@
 package main
 
 import (
-	_ "github.com/apache/skywalking-go"
 	"net/http"
+
+	_ "github.com/apache/skywalking-go"
 )
 
 func consumerHandler(w http.ResponseWriter, r *http.Request) {
