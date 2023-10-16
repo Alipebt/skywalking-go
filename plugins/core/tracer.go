@@ -55,7 +55,7 @@ type Tracer struct {
 }
 
 func (t *Tracer) Init(entity *reporter.Entity, rep reporter.Reporter, samp Sampler, logger operator.LogOperator,
-	meterCollectSecond int) error {
+	meterCollectSecond int, correlation *CorrelationConfig) error {
 	t.ServiceEntity = entity
 	t.Reporter = rep
 	t.Sampler = samp
@@ -65,10 +65,7 @@ func (t *Tracer) Init(entity *reporter.Entity, rep reporter.Reporter, samp Sampl
 	t.Reporter.Boot(entity, t.cdsWatchers)
 	t.initFlag = 1
 	t.initMetricsCollect(meterCollectSecond)
-	t.correlation = &CorrelationConfig{
-		MaxKeyCount:  3,
-		MaxValueSize: 128,
-	}
+	t.correlation = correlation
 	// notify the tracer been init success
 	if len(GetInitNotify()) > 0 {
 		for _, fun := range GetInitNotify() {
