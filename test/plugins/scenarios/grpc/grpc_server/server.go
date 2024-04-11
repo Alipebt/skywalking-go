@@ -23,6 +23,7 @@ import (
 	"io"
 	"log"
 	"net"
+	_ "sync/atomic"
 	"test/plugins/scenarios/grpc/api"
 
 	"google.golang.org/grpc"
