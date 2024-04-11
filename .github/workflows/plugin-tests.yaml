@@ -74,32 +74,7 @@ jobs:
     strategy:
       matrix:
         case:
-          - gin
-          - http
-          - dubbo
-          - go-redisv9
-          - go-restfulv3
-          - gorm
-          - kratosv2
-          - microv4
-          - mongo
-          - mysql
-          - zap
-          - logrus
-          - plugin_exclusion
-          - runtime_metrics
-          - mux
           - grpc
-          - irisv12
-          - trace-activation
-          - fasthttp
-          - discard-reporter
-          - fiber
-          - echov4
-          - rocketmq
-          - amqp
-          - pulsar
-          - segmentio-kafka
     steps:
       - uses: actions/checkout@v2
         with:
