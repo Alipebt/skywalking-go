@@ -22,7 +22,7 @@ export-port: 8080
 support-version:
   - go: 1.18
     framework:
-      - v1.55.0
-      - v1.56.0
-      - v1.57.0
+#      - v1.55.0
+#      - v1.56.0
+#      - v1.57.0
       - v1.62.1
