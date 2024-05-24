@@ -74,14 +74,6 @@ func (i *Instrument) Points() []*instrument.Point {
 				instrument.WithArgType(0, "transport.ServerTransport")),
 			Interceptor: "ServerHandleStreamInterceptor ",
 		},
-		// {
-		//	PackagePath: "",
-		//	At: instrument.NewMethodEnhance("*Server", "sendResponse",
-		//		instrument.WithArgsCount(6),
-		//		instrument.WithArgType(0, "transport.ServerTransport"),
-		//		instrument.WithResultType(0, "error")),
-		//	Interceptor: "ServerSendResponseInterceptor",
-		// },
 		{
 			PackagePath: "",
 			At: instrument.NewMethodEnhance("*Server", "sendResponse",
