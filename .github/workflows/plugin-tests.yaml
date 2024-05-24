@@ -177,7 +177,7 @@ jobs:
     name: Plugin Tests
     needs:
       - test
-      - test-on-macos
+#      - test-on-macos
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
