@@ -46,8 +46,8 @@ func (i *Instrument) VersionChecker(version string) bool {
 	return true
 }
 
-//skywalking:nocopy
 func (i *Instrument) Points() []*instrument.Point {
+	//skywalking:nocopy
 	return []*instrument.Point{
 		{
 			PackagePath: "",
