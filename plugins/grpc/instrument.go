@@ -46,7 +46,7 @@ func (i *Instrument) VersionChecker(version string) bool {
 	return true
 }
 
-// nolint:funlen
+// nolint:funlen // Function 'Points' is too long
 func (i *Instrument) Points() []*instrument.Point {
 	return []*instrument.Point{
 		{
