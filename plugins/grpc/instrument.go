@@ -46,6 +46,7 @@ func (i *Instrument) VersionChecker(version string) bool {
 	return true
 }
 
+//skywalking:nocopy
 func (i *Instrument) Points() []*instrument.Point {
 	return []*instrument.Point{
 		{
