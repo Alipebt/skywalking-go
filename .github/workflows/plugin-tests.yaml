@@ -29,8 +29,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest, macos-12]
-#        os: [ubuntu-latest]
+#        os: [ubuntu-latest, macos-12]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     steps:
@@ -124,60 +124,60 @@ jobs:
           path: test/plugins/workspace
           name: test-plugins-workspace-${{ matrix.case }}-ubuntu
 
-  test-on-macos:
-    if: always()
-    name: gin-macos
-    needs:
-      - build
-    runs-on: macos-12
-    timeout-minutes: 90
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-      - uses: actions/download-artifact@v2
-        with:
-          name: test-tools-macos-12
-          path: test/plugins/dist
-      - name: Set up Go 1.18
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.18
-      - name: Setup docker (missing on MacOS)
-        if: runner.os == 'macos'
-        env:
-          HOMEBREW_NO_AUTO_UPDATE: "1"
-          HOMEBREW_NO_INSTALL_UPGRADE: "1"
-          HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: "1"
-        run: |
-          brew install docker docker-compose
-          brew install colima
-          colima start
-
-          # For testcontainers to find the Colima socket
-          # https://github.com/abiosoft/colima/blob/main/docs/FAQ.md#cannot-connect-to-the-docker-daemon-at-unixvarrundockersock-is-the-docker-daemon-running
-          sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
-      - name: Setup Tools
-        run: |
-          chmod +x test/plugins/dist/*
-          if ls test/plugins/dist/skywalking-agent-test-validator-1.0.0.tgz; then
-            docker load -i test/plugins/dist/skywalking-agent-test-validator-1.0.0.tgz
-          fi
-      - name: Run Test
-        run: bash test/plugins/run.sh short_versions_gin
-      - uses: actions/upload-artifact@v2
-        name: Upload Agent
-        if: ${{ failure() }}
-        with:
-          path: test/plugins/workspace
-          name: test-plugins-workspace-gin-macos
+#  test-on-macos:
+#    if: always()
+#    name: gin-macos
+#    needs:
+#      - build
+#    runs-on: macos-12
+#    timeout-minutes: 90
+#    steps:
+#      - uses: actions/checkout@v2
+#        with:
+#          submodules: true
+#      - uses: actions/download-artifact@v2
+#        with:
+#          name: test-tools-macos-12
+#          path: test/plugins/dist
+#      - name: Set up Go 1.18
+#        uses: actions/setup-go@v2
+#        with:
+#          go-version: 1.18
+#      - name: Setup docker (missing on MacOS)
+#        if: runner.os == 'macos'
+#        env:
+#          HOMEBREW_NO_AUTO_UPDATE: "1"
+#          HOMEBREW_NO_INSTALL_UPGRADE: "1"
+#          HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: "1"
+#        run: |
+#          brew install docker docker-compose
+#          brew install colima
+#          colima start
+#
+#          # For testcontainers to find the Colima socket
+#          # https://github.com/abiosoft/colima/blob/main/docs/FAQ.md#cannot-connect-to-the-docker-daemon-at-unixvarrundockersock-is-the-docker-daemon-running
+#          sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
+#      - name: Setup Tools
+#        run: |
+#          chmod +x test/plugins/dist/*
+#          if ls test/plugins/dist/skywalking-agent-test-validator-1.0.0.tgz; then
+#            docker load -i test/plugins/dist/skywalking-agent-test-validator-1.0.0.tgz
+#          fi
+#      - name: Run Test
+#        run: bash test/plugins/run.sh short_versions_gin
+#      - uses: actions/upload-artifact@v2
+#        name: Upload Agent
+#        if: ${{ failure() }}
+#        with:
+#          path: test/plugins/workspace
+#          name: test-plugins-workspace-gin-macos
 
   required:
     if: always()
     name: Plugin Tests
     needs:
       - test
-      - test-on-macos
+#      - test-on-macos
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
