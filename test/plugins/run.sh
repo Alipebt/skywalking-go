@@ -129,18 +129,18 @@ if [[ ! -f $configuration ]]; then
 fi
 
 # support go, framework versions
-framework_name=$(yq e '.framework' $configuration)
+framework_name=$(yq -e '.framework' $configuration)
 if [ -z "$framework_name" ]; then
   exitWithMessage "Missing framework name in configuration"
 fi
-support_version_count=$(yq e '.support-version | length' $configuration)
+support_version_count=$(yq -e ".\"support-version\" | length" $configuration)
 if [ "$support_version_count" -eq 0 ]; then
   exitWithMessage "Missing support-version list in configuration"
 fi
 index=0
 while [ $index -lt $support_version_count ]; do
-  go_version=$(yq e ".support-version[$index].go" $configuration)
-  framework_count=$(yq e ".support-version[$index].framework | length" $configuration)
+  go_version=$(yq -e ".\"support-version\"[$index].go" $configuration)
+  framework_count=$(yq -e ".\"support-version\"[$index].framework | length" $configuration)
 
   if [ -z "$go_version" ] || ([[ "$framework_name" != "go" ]] && [ "$framework_count" -eq 0 ]); then
     exitWithMessage "Missing go or framework in list entry $index."
@@ -160,9 +160,8 @@ go_agent="${home}/dist/skywalking-go-agent"
 if [[ ! -f $go_agent ]]; then
     exitWithMessage "cannot found 'go-agent' in directory ${home}/dist"
 fi
-
-yq e '.support-version[].go' $configuration | while read -r go_version; do
-frameworks=$(yq e ".support-version[] | select(.go == \"$go_version\") | .framework[]" $configuration)
+yq -e ".\"support-version\"[].go" $configuration | while read -r go_version; do
+frameworks=$(yq -e -r ".\"support-version\"[] | select(.go == $go_version) | .framework[]" $configuration)
 if [[ "$framework_name" == "go" ]]; then
   frameworks=("native")
 fi
