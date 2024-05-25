@@ -77,10 +77,18 @@ func (i *Instrument) Points() []*instrument.Point {
 		{
 			PackagePath: "",
 			At: instrument.NewMethodEnhance("*Server", "sendResponse",
+				instrument.WithArgsCount(6),
+				instrument.WithArgType(0, "transport.ServerTransport"),
+				instrument.WithResultType(0, "error")),
+			Interceptor: "ServerSendResponseInterceptor",
+		},
+		{
+			PackagePath: "",
+			At: instrument.NewMethodEnhance("*Server", "sendResponse",
 				instrument.WithArgsCount(7),
 				instrument.WithArgType(0, "context.Context"),
 				instrument.WithResultType(0, "error")),
-			Interceptor: "ServerSendResponseInterceptor",
+			Interceptor: "ServerSendResponseInterceptorV160",
 		},
 		{
 			PackagePath: "",
@@ -92,10 +100,26 @@ func (i *Instrument) Points() []*instrument.Point {
 		},
 		{
 			PackagePath: "",
+			At: instrument.NewMethodEnhance("*Server", "processUnaryRPC",
+				instrument.WithArgsCount(5),
+				instrument.WithArgType(0, "transport.ServerTransport"),
+				instrument.WithResultType(0, "error")),
+			Interceptor: "ServerUnaryInterceptor",
+		},
+		{
+			PackagePath: "",
 			At: instrument.NewMethodEnhance("*Server", "processStreamingRPC",
 				instrument.WithArgsCount(6),
 				instrument.WithArgType(0, "context.Context"),
 				instrument.WithArgType(1, "transport.ServerTransport")),
+			Interceptor: "ServerStreamingInterceptor",
+		},
+		{
+			PackagePath: "",
+			At: instrument.NewMethodEnhance("*Server", "processStreamingRPC",
+				instrument.WithArgsCount(3),
+				instrument.WithArgType(0, "transport.ServerTransport"),
+				instrument.WithArgType(1, "*transport.Stream")),
 			Interceptor: "ServerStreamingInterceptor",
 		},
 		{
