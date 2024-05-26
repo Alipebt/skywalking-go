@@ -46,7 +46,6 @@ func (i *Instrument) VersionChecker(version string) bool {
 	return true
 }
 
-// nolint:funlen // Function 'Points' is too long
 func (i *Instrument) Points() []*instrument.Point {
 	return []*instrument.Point{
 		{
@@ -85,35 +84,11 @@ func (i *Instrument) Points() []*instrument.Point {
 		},
 		{
 			PackagePath: "",
-			At: instrument.NewMethodEnhance("*Server", "sendResponse",
-				instrument.WithArgsCount(7),
-				instrument.WithArgType(0, "context.Context"),
-				instrument.WithResultType(0, "error")),
-			Interceptor: "ServerSendResponseInterceptorV160",
-		},
-		{
-			PackagePath: "",
-			At: instrument.NewMethodEnhance("*Server", "processUnaryRPC",
-				instrument.WithArgsCount(6),
-				instrument.WithArgType(0, "context.Context"),
-				instrument.WithResultType(0, "error")),
-			Interceptor: "ServerUnaryInterceptor",
-		},
-		{
-			PackagePath: "",
 			At: instrument.NewMethodEnhance("*Server", "processUnaryRPC",
 				instrument.WithArgsCount(5),
 				instrument.WithArgType(0, "transport.ServerTransport"),
 				instrument.WithResultType(0, "error")),
 			Interceptor: "ServerUnaryInterceptor",
-		},
-		{
-			PackagePath: "",
-			At: instrument.NewMethodEnhance("*Server", "processStreamingRPC",
-				instrument.WithArgsCount(6),
-				instrument.WithArgType(0, "context.Context"),
-				instrument.WithArgType(1, "transport.ServerTransport")),
-			Interceptor: "ServerStreamingInterceptor",
 		},
 		{
 			PackagePath: "",
